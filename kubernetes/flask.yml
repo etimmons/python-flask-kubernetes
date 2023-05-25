@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: python-flask-app
+spec:
+  selector:
+    matchLabels:
+      app: python-flask-app
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+
+  template:
+    metadata:
+      labels:
+        app: python-flask-app
+    spec:
+      containers:
+        - name: python-flask-app
+          image: delsurf/python-flask-app:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 5000
